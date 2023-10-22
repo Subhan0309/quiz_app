@@ -4,17 +4,17 @@ import React from "react";
 
 function QuizQuestions({ setEdit, questions,setQuestions }) {
 
-    const [quizQuestions, setQuizQuestions] = React.useState([]);
+    //const [quizQuestions, setQuizQuestions] = React.useState([]);
 
     React.useEffect(() => {
-        setQuizQuestions(questions);
+        setQuestions(questions);
     }, [questions]);
 
 
     
     const handleDelete = (indexToDelete) => {
-        const updatedQuizzes = quizQuestions.filter((_, index) => index !== indexToDelete);
-        setQuizQuestions(updatedQuizzes);
+        const updatedQuizzes = questions.filter((_, index) => index !== indexToDelete);
+        setQuestions(updatedQuizzes);
     };
     const handleEdit = (index) => {
         setEdit({
@@ -32,18 +32,18 @@ function QuizQuestions({ setEdit, questions,setQuestions }) {
 
     //   fetchQuizzes();
     // }, []);
-    React.useEffect(()=>{
-        setQuestions(quizQuestions);
-    },[quizQuestions]);
+    // React.useEffect(()=>{
+    //     setQuestions(quizQuestions);
+    // },[quizQuestions]);
 
     return (
 
         <div className="bg-gray-100 p-5 space-y-6 w-3/5 h-full overflow-y-auto relative m-8 top-0  right-0 shadow-md rounded-lg">
-            {quizQuestions.length > 0 ? (
+            {questions.length > 0 ? (
                 <>
                     <h1 className="text-black font-bold text-3xl text-center">Questions List</h1>
                     <ul className="bg-gray-100 p-5 space-y-6 max-w-[50rem]  mt-5 ">
-                        {quizQuestions.map((question, index) => (
+                        {questions.map((question, index) => (
                             // Question heading and options
                             <li key={question.id} className="bg-white p-5 rounded-lg shadow-sm">
                                 <h1 className="text-xl text-start font-semibold mb-4">
@@ -79,7 +79,7 @@ function QuizQuestions({ setEdit, questions,setQuestions }) {
             )}
 
 
-            {quizQuestions.length > 0 && (
+            {questions.length > 0 && (
                 <div>
                     <button
                         className="bg-green-500 w-[100px] text-white px-4 py-2 rounded hover-bg-green-600 transition-colors m-4"
