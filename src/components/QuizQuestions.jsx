@@ -1,37 +1,26 @@
-import Questions from "../quizzes";
+/* eslint-disable react/prop-types */
+
 import React from "react";
-import EditQuestion from "./EditQuestion";
 
-function QuizQuestions() {
+function QuizQuestions({ setEdit, questions,setQuestions }) {
 
-    const [quizQuestions, setQuizQuestions] = React.useState(Questions);
-    const [editedQuestion, setEditedQuestion] = React.useState(null);
-    const [editing, setEditing] = React.useState(false);
+    const [quizQuestions, setQuizQuestions] = React.useState([]);
 
-    const handleDelete = (id) => {
-        const updatedQuizzes = [];
+    React.useEffect(() => {
+        setQuizQuestions(questions);
+    }, [questions]);
 
-        for (let index = 0; index < quizQuestions.length; index++) {
-            if (quizQuestions[index].id !== id) {
-                updatedQuizzes.push(quizQuestions[index]);
-            }
-        }
 
-        setQuizQuestions(updatedQuizzes); // assuming you have a state management setup with `setQuizzes`
+    
+    const handleDelete = (indexToDelete) => {
+        const updatedQuizzes = quizQuestions.filter((_, index) => index !== indexToDelete);
+        setQuizQuestions(updatedQuizzes);
     };
-    const handleEditComplete = (updatedQuestion) => {
-
-        setQuizQuestions(prevQuestions =>
-            prevQuestions.map(q =>
-                q.id === updatedQuestion.id ? updatedQuestion : q
-            )
-        );
-        setEditedQuestion(null);
-        setEditing(null);
-    };
-    const handleEdit = (id) => {
-        setEditedQuestion(quizQuestions.find(q => q.id === id));
-        setEditing(true);
+    const handleEdit = (index) => {
+        setEdit({
+            index,
+            status: true,
+        });
 
     };
 
@@ -43,67 +32,67 @@ function QuizQuestions() {
 
     //   fetchQuizzes();
     // }, []);
+    React.useEffect(()=>{
+        setQuestions(quizQuestions);
+    },[quizQuestions]);
 
     return (
 
-        <div className="bg-gray-100 p-8 space-y-6 max-w-[50rem] mx-auto mt-10 rounded-lg shadow-md">
-    {editing ? (
-        <EditQuestion
-            ques={editedQuestion}
-            onEditComplete={handleEditComplete}
-        />
-    ) : (
-        quizQuestions.length > 0 ? (
-            <ul className="bg-gray-100 p-8 space-y-6 max-w-[50rem] mx-auto mt-10 ">
-                {quizQuestions.map(question => (
-                    // Question heading and options
-                    <li key={question.id} className="bg-white p-6 rounded-lg shadow-sm">
-                        <h1 className="text-xl text-start font-semibold mb-4">
-                            {question.question}
-                        </h1>
-                        
-                        <ul className="space-y-2 pl-5 flex flex-col items-start">
-                            {question.options.map((option, index) => (
-                                <li key={index} className="list-disc">{option}</li>
-                            ))}
-                        </ul>
+        <div className="bg-gray-100 p-5 space-y-6 w-3/5 h-full overflow-y-auto relative m-8 top-0  right-0 shadow-md rounded-lg">
+            {quizQuestions.length > 0 ? (
+                <>
+                    <h1 className="text-black font-bold text-3xl text-center">Questions List</h1>
+                    <ul className="bg-gray-100 p-5 space-y-6 max-w-[50rem]  mt-5 ">
+                        {quizQuestions.map((question, index) => (
+                            // Question heading and options
+                            <li key={question.id} className="bg-white p-5 rounded-lg shadow-sm">
+                                <h1 className="text-xl text-start font-semibold mb-4">
+                                    {question.question}
+                                </h1>
 
-                        {/* buttons for editing and deletion */}
-                        <div className="flex justify-end items-center mt-4">
-                            <button
-                                className="bg-blue-500 w-[100px] text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors m-4"
-                                onClick={() => handleEdit(question.id)}>
-                                Edit
-                            </button>
-                            <button
-                                className="bg-red-500 w-[100px] text-white px-4 py-2 rounded hover:bg-red-600 transition-colors m-4"
-                                onClick={() => handleDelete(question.id)}>
-                                Delete
-                            </button>
-                        </div>
-                    </li>
-                ))}
-            </ul>
-        ):(
-            <div>
+                                <ul className="space-y-2 pl-5 flex flex-col items-start">
+                                    {question.options.map((option, index) => (
+                                        <li key={index} className="list-disc">{option}</li>
+                                    ))}
+                                </ul>
+
+                                {/* buttons for editing and deletion */}
+                                <div className="flex justify-end items-center mt-4">
+                                    <button
+                                        className="bg-blue-500 w-[100px] text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors m-4"
+                                        onClick={() => handleEdit(index)}>
+                                        Edit
+                                    </button>
+                                    <button
+                                        className="bg-red-500 w-[100px] text-white px-4 py-2 rounded hover:bg-red-600 transition-colors m-4"
+                                        onClick={() => handleDelete(index)}>
+                                        Delete
+                                    </button>
+                                </div>
+                            </li>
+                        ))}
+                    </ul></>
+            ) : (
+                <div>
                     <h1 className="font-bold text-xl">No Questions to display</h1>
-            </div>
-        )
-    )}
+                </div>
+            )}
 
-    {quizQuestions.length > 0 && (
-        <div>
-            <button
-                className="bg-green-500 w-[100px] text-white px-4 py-2 rounded hover-bg-green-600 transition-colors m-4"
-            >
-                Submit
-            </button>
+
+            {quizQuestions.length > 0 && (
+                <div>
+                    <button
+                        className="bg-green-500 w-[100px] text-white px-4 py-2 rounded hover-bg-green-600 transition-colors m-4"
+                    >
+                        {/* apply the handle submit function and Update the passed global state copying the elements from local state */}
+                        Submit
+                    </button>
+                </div>
+            )}
         </div>
-    )}
-</div>
 
-        
-        );
-    }
+
+    );
+}
 
 export default QuizQuestions;

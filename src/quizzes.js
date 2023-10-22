@@ -20,7 +20,7 @@ const quizzes = [
     ,
     {
       id:4,
-      question: "Do you know Johny Sins ?",
+      question: "Do you know johnSon ?",
       options: ["Yes","No"],
       correctOption: "1"
     }

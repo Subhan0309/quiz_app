@@ -1,18 +1,16 @@
 //import { useState } from 'react'
 import './App.css'
 import './index.css'
-import QuestionForm from './components/QuestionCreation.jsx'
-import QuestionsList from './components/QuizQuestions.jsx'
-import AttemptQuiz from './components/AttemptQuiz'
+import Teacher from './components/Teacher'
 
 function App() {
 
 
   return (
-    <div>
-      {/* <QuestionForm></QuestionForm> */}
-      {/* <QuestionsList></QuestionsList> */}
-      <AttemptQuiz/>
+    <div className='p-0 m-0'>
+     
+     <Teacher/>
+      {/* <AttemptQuiz/> */}
       
     </div>
   )
