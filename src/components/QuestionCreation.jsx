@@ -8,6 +8,8 @@ const QuestionForm = ({ edit, setEdit, questions, setQuestions, notification, se
     const [numberOfOptions, setNumberOfOptions] = useState(2);
     const [options, setOptions] = useState(['', '']);
     const [correctOption, setCorrectOption] = useState('');
+    //The marks can be set  according to the instructions
+    //const [marks,setMarks]=useState("");
     //const [notification, setNotification] = useState({ message: '', type: '', visible: false });
 
 
